@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Lab1</string>
+    <string name="preference_file_key">preferences</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

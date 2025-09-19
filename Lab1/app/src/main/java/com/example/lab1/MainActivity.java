@@ -1,5 +1,8 @@
 package com.example.lab1;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -8,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
     String test = "WORKING0";
 
+    SharedPreferences sp;
+    EditText userInput;
+    EditText passInput;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +44,18 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        EditText userInput = findViewById(R.id.userInput);
+        EditText passInput = findViewById(R.id.passInput);
+
+        SharedPreferences sharedpref = getApplicationContext().getSharedPreferences("userPrefs",Context.MODE_PRIVATE);
+        userInput.setText(sharedpref.getString("username",""));
+        passInput.setText(sharedpref.getString("password",""));
 
         CheckBox PassToggle = findViewById(R.id.checkBox);
+        CheckBox rememberBox = findViewById(R.id.rememberMeCheck);
+
+
+
 
         PassToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -49,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     if (isChecked) {
                         passInput.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     } else {
-                        passInput.setInputType(129); // enum dosen't exist??????
+                        passInput.setInputType(129); // The enum to switch back to string form is 129, which does not exist in the documentation
 
                     }
                   }
@@ -61,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         EditText userInput = findViewById(R.id.userInput);
         EditText passInput = findViewById(R.id.passInput);
         TextView displayMsg = findViewById(R.id.displayMsg);
+        CheckBox rememberBox = findViewById(R.id.rememberMeCheck);
 
         String invalidDisplayMsg = "Invalid username/password";
         String validDisplayMsg = "Login Successful";
@@ -69,6 +88,17 @@ public class MainActivity extends AppCompatActivity {
             displayMsg.setText(invalidDisplayMsg);
         } else {
             displayMsg.setText(validDisplayMsg);
+
+            if(rememberBox.isChecked()){
+                sp = getSharedPreferences("userPrefs",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("username",userInput.getText().toString());
+                editor.putString("password",passInput.getText().toString());
+                editor.commit();
+                Log.d("MainActivity","info saved");
+            }
+            sndMsg(view);
+
         }
 
 
@@ -83,5 +113,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void sndMsg(View view){
+        Intent intent = new Intent(this,WelcomeActivity.class);
+
+        EditText myMsg = (EditText) findViewById(R.id.userInput);
+        String msg = myMsg.getText().toString();
+
+        intent.putExtra("MESSAGE",msg);
+
+        startActivity(intent);
+    }
 
 }
