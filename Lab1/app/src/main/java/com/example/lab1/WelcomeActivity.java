@@ -25,6 +25,6 @@ public class WelcomeActivity extends AppCompatActivity {
         TextView welcomeView = findViewById(R.id.welcomeText);
         Intent intent = getIntent();
         String name = intent.getStringExtra("MESSAGE");
-        welcomeView.setText("Welcome" + name);
+        welcomeView.setText("Welcome " + name);
     }
 }
