@@ -47,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d("RegisterActivity","registering account");
     }
     private void writeToFile(String data, Context context) {
+        // write username and password in a file
         File file = new File(context.getFilesDir(), "users.txt");
 
         if (!file.exists()) {

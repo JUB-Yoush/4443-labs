@@ -30,14 +30,8 @@ import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
-    String userName = "admin";
-    String pass = "1234";
-
-    String test = "WORKING0";
 
     SharedPreferences sp;
-    EditText userInput;
-    EditText passInput;
 
 
     @Override
@@ -64,25 +58,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        PassToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        PassToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                  EditText passInput1 = findViewById(R.id.passInput);
+            Log.d("MainActivity",Integer.toString(passInput1.getInputType()));
+                  //InputType oldone = (InputType) passInput.getInputType();
+                  if (isChecked) {
+                      passInput1.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                  } else {
+                      passInput1.setInputType(129); // The enum to switch back to string form is 129, which does not exist in the documentation
 
-          @Override
-              public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                    EditText passInput = findViewById(R.id.passInput);
-              Log.d("MainActivity",Integer.toString(passInput.getInputType()));
-                    //InputType oldone = (InputType) passInput.getInputType();
-                    if (isChecked) {
-                        passInput.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    } else {
-                        passInput.setInputType(129); // The enum to switch back to string form is 129, which does not exist in the documentation
-
-                    }
                   }
-              }
+                }
         );
     }
 
     public void ValidateInput(View view) {
+        // check if username and password are in the list
         EditText userInput = findViewById(R.id.userInput);
         EditText passInput = findViewById(R.id.passInput);
         TextView displayMsg = findViewById(R.id.displayMsg);
@@ -161,8 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<String> readFromFile(Context context) {
-
-        String ret = "";
+        // gets usernames and passwords from file
         ArrayList<String> out = new ArrayList<>();
         try {
             InputStream inputStream = context.openFileInput("users.txt");
@@ -177,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                     out.add(receiveString);
                 }
                 inputStream.close();
-                ret = stringBuilder.toString();
             }
         }
         catch (FileNotFoundException e) {
