@@ -19,7 +19,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -84,7 +91,31 @@ public class MainActivity extends AppCompatActivity {
         String invalidDisplayMsg = "Invalid username/password";
         String validDisplayMsg = "Login Successful";
 
-        if (!userInput.getText().toString().equals(userName) || !passInput.getText().toString().equals(pass)) {
+        ArrayList<String> users = readFromFile(this);
+        boolean valid = false;
+
+        Log.d("MainActivity",Integer.toString(users.size()));
+        for (String user:
+             users) {
+            Log.d("MainActivity",user);
+        }
+        Log.d("MainActivity",users.toString());
+        for (int i = 0; i < users.size();i+=2) {
+            String user = users.get(i);
+            Log.d("MainActivity",user);
+            Log.d("MainActivity",userInput.getText().toString());
+
+            String pass = users.get(i+1);
+            Log.d("MainActivity",pass);
+
+            if (userInput.getText().toString().equals(user) && passInput.getText().toString().equals(pass)){
+                valid = true;
+                break;
+            }
+        }
+
+
+        if (!valid){
             displayMsg.setText(invalidDisplayMsg);
         } else {
             displayMsg.setText(validDisplayMsg);
@@ -124,4 +155,36 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onRegisterClicked(View view){
+        Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    private ArrayList<String> readFromFile(Context context) {
+
+        String ret = "";
+        ArrayList<String> out = new ArrayList<>();
+        try {
+            InputStream inputStream = context.openFileInput("users.txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((receiveString = bufferedReader.readLine()) != null ) {
+                    out.add(receiveString);
+                }
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+        return out;
+    }
 }
