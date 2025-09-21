@@ -33,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        writeToFile("admin" + "\n",this);
+        writeToFile("1234"+ "\n" ,this);
     }
     public void onLoginClicked(View view){
         Intent intent = new Intent(this,MainActivity.class);

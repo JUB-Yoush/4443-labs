@@ -84,26 +84,33 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> users = readFromFile(this);
         boolean valid = false;
-
-        Log.d("MainActivity",Integer.toString(users.size()));
-        for (String user:
-             users) {
-            Log.d("MainActivity",user);
-        }
-        Log.d("MainActivity",users.toString());
-        for (int i = 0; i < users.size();i+=2) {
-            String user = users.get(i);
-            Log.d("MainActivity",user);
-            Log.d("MainActivity",userInput.getText().toString());
-
-            String pass = users.get(i+1);
-            Log.d("MainActivity",pass);
-
-            if (userInput.getText().toString().equals(user) && passInput.getText().toString().equals(pass)){
-                valid = true;
-                break;
+        if (userInput.getText().toString().equals("admin") && passInput.getText().toString().equals("1234")){
+            valid = true;
+        }else{
+            Log.d("MainActivity",Integer.toString(users.size()));
+            for (String user:
+                    users) {
+                Log.d("MainActivity",user);
             }
+            Log.d("MainActivity",users.toString());
+            for (int i = 0; i < users.size();i+=2) {
+                String user = users.get(i);
+                Log.d("MainActivity",user);
+                Log.d("MainActivity",userInput.getText().toString());
+
+                String pass = users.get(i+1);
+                Log.d("MainActivity",pass);
+                Log.d("MainActivity",passInput.getText().toString());
+
+
+                if (userInput.getText().toString().equals(user) && passInput.getText().toString().equals(pass)){
+                    valid = true;
+                    break;
+                }
+            }
+
         }
+
 
 
         if (!valid){
