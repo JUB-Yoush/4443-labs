@@ -12,7 +12,7 @@
         android:layout_width="409dp"
         android:layout_height="729dp"
         android:layout_margin="34dp"
-        android:gravity="center"
+        android:gravity="center|top"
         android:orientation="vertical"
         android:padding="34dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,6 +45,12 @@
             android:layout_width="match_parent"
             android:layout_height="88dp"
             android:text="Placeholder Desc Placeholder Desc Placeholder Desc Placeholder DescPlaceholder Desc " />
+
+        <Button
+            android:id="@+id/returnBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Return" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
