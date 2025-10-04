@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/imgThumb"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="117dp"
+        android:layout_height="107dp"
         android:contentDescription="hi"
         android:scaleType="centerCrop"
         android:src="@android:mipmap/sym_def_app_icon"

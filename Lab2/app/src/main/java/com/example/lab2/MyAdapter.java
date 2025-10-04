@@ -1,5 +1,7 @@
 package com.example.lab2;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private final List<Item> items;
+    private final Context context; // add context reference
 
     public static class Item {
         String title;
@@ -40,8 +43,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
     }
 
-    public MyAdapter(List<Item> items) {
+    public MyAdapter(List<Item> items, Context context) {
         this.items = items;
+        this.context = context;
     }
 
     @NonNull
@@ -60,6 +64,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // Optionally, you can also set the image resource here if needed
         // Set the image resource
         holder.imgThumb.setImageResource(currentItem.imageResId);
+        // Set click listener on the whole item
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("EXTRA_TITLE", currentItem.title);
+            intent.putExtra("EXTRA_DESC", currentItem.summary);
+            intent.putExtra("EXTRA_IMAGE", currentItem.imageResId);
+            context.startActivity(intent);
+        });
     }
 
     @Override
