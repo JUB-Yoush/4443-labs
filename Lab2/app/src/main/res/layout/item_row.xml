@@ -13,12 +13,12 @@
         android:id="@+id/imgThumb"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:contentDescription="@string/thumb_cd"
-        android:src="@mipmap/ic_launcher_foreground"
+        android:contentDescription="hi"
         android:scaleType="centerCrop"
+        android:src="@android:mipmap/sym_def_app_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtTitle"

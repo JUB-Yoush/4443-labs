@@ -20,12 +20,12 @@
 
         <ImageView
             android:id="@+id/detailImage"
-            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="220dp"
+            android:layout_marginTop="12dp"
+            android:contentDescription="s"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/detail_img_cd"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@android:mipmap/sym_def_app_icon" />
 
         <TextView
             android:id="@+id/detailDesc"
