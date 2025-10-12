@@ -50,8 +50,6 @@ public class AddNewItemActivity extends AppCompatActivity {
 
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-
-
     }
 
     public void cancelPressed(View view){

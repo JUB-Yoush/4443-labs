@@ -81,31 +81,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.descriptionView.setText(deadline);
         holder.indexView.setText(index);
 
-        // Set click listener on the whole item
-        /*
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, TapView.class);
-            intent.putExtra("EXTRA_NAME",name);
-            intent.putExtra("EXTRA_DESC", description);
-            intent.putExtra("EXTRA_DEAD", deadline);
-            context.startActivity(intent);
-        });
-         */
-        // Create a GestureDetector
+    // Create a GestureDetector
         GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public void onLongPress(MotionEvent e) {
-                // Handle long press here
-                showPopupMenu(holder.itemView, Integer.parseInt(index));
+                // long press
+                showPopupMenu(holder.itemView, Integer.parseInt(index),name,description,deadline);
             }
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                // Handle long press here
+                // tap
                 Intent intent = new Intent(context, TapView.class);
                 intent.putExtra("EXTRA_NAME", name);
                 intent.putExtra("EXTRA_DESC", description);
                 intent.putExtra("EXTRA_DEAD", deadline);
+                intent.putExtra("EXTRA_INDEX", index);
                 context.startActivity(intent);
                 return false; // Return false to allow other clicks to be handled
             }
@@ -118,7 +109,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         });
     }
 
-    private void showPopupMenu(View view, int index) {
+    private void showPopupMenu(View view, int index, String name, String description, String deadline) {
         PopupMenu popup = new PopupMenu(context, view);
         popup.inflate(R.menu.popup_menu);
 
@@ -127,12 +118,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             if (item.getItemId() == R.id.option_one) {
                 Log.d("MainActivity", "update"+index);
                 //send to update page
+                Intent intent = new Intent(context, TapView.class);
+                intent.putExtra("EXTRA_NAME", name);
+                intent.putExtra("EXTRA_DESC", description);
+                intent.putExtra("EXTRA_DEAD", deadline);
+                intent.putExtra("EXTRA_INDEX", index);
+                context.startActivity(intent);
                 return true;
             }
             if (item.getItemId() == R.id.option_two) {
                 Log.d("MainActivity","delete"+index);
                 deleteTodo(index);
-
                 return true;
             }
             return false;
@@ -163,7 +159,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             editor.putString("dead"+(i-1),sharedPreferences.getString("dead"+i,""));
         }
         editor.putInt("count",len-1);
+
+        editor.putString("name"+len,"");
+        editor.putString("desc"+len,"");
+        editor.putString("dead"+len,"");
+
         editor.apply();
+        notifyDataSetChanged();
         notifyItemRemoved(index);
     }
 }
