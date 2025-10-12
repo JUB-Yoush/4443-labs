@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab3">
         <activity
+            android:name=".TapView"
+            android:exported="false" />
+        <activity android:name=".AddNewItemActivity" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

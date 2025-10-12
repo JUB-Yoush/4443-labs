@@ -16,7 +16,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private MyAdapter myAdapter;
+    private ItemAdapter itemAdapter;
     private String[] itemTitles = {
         "White",
             "Whole Wheat",
@@ -86,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Create a list of 15 items
-        List<MyAdapter.Item> items = new ArrayList<>();
+        List<ItemAdapter.Item> items = new ArrayList<>();
         for (int i = 1; i < 15; i++) {
-            items.add(new MyAdapter.Item(itemTitles[i],itemDesc[i],imageRes[i]));
+            items.add(new ItemAdapter.Item(itemTitles[i],itemDesc[i],imageRes[i]));
         }
-        myAdapter = new MyAdapter(items,this);
-        recyclerView.setAdapter(myAdapter);
+        itemAdapter = new ItemAdapter(items,this);
+        recyclerView.setAdapter(itemAdapter);
     }
 }
