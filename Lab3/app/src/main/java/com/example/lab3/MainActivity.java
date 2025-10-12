@@ -64,4 +64,10 @@ public class MainActivity extends AppCompatActivity {
     Intent i = new Intent(this, AddNewItemActivity.class);
     startActivity(i);
     }
+
+    public void deleteTodo(int index){
+        SharedPreferences sharedPreferences = getSharedPreferences("Todos", MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+    }
 }

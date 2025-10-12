@@ -53,6 +53,11 @@ public class AddNewItemActivity extends AppCompatActivity {
 
 
     }
+
+    public void cancelPressed(View view){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
     public void testKVStore(){
         SharedPreferences sharedPreferences = getSharedPreferences("Todos", MODE_PRIVATE);
         int count = sharedPreferences.getInt("count",-1);

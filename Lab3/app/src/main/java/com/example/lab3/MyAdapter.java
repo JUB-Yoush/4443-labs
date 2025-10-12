@@ -1,9 +1,17 @@
 package com.example.lab3;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,24 +84,86 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // Set click listener on the whole item
         /*
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("EXTRA_TITLE", currentItem.title);
-            intent.putExtra("EXTRA_DESC", currentItem.summary);
-            intent.putExtra("EXTRA_IMAGE", currentItem.imageResId);
+            Intent intent = new Intent(context, TapView.class);
+            intent.putExtra("EXTRA_NAME",name);
+            intent.putExtra("EXTRA_DESC", description);
+            intent.putExtra("EXTRA_DEAD", deadline);
             context.startActivity(intent);
         });
          */
+        // Create a GestureDetector
+        GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public void onLongPress(MotionEvent e) {
+                // Handle long press here
+                showPopupMenu(holder.itemView, Integer.parseInt(index));
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                // Handle long press here
+                Intent intent = new Intent(context, TapView.class);
+                intent.putExtra("EXTRA_NAME", name);
+                intent.putExtra("EXTRA_DESC", description);
+                intent.putExtra("EXTRA_DEAD", deadline);
+                context.startActivity(intent);
+                return false; // Return false to allow other clicks to be handled
+            }
+            // Set touch listener on the whole item view
+        });
+        // Set touch listener on the whole item view
+        holder.itemView.setOnTouchListener((v, event) -> {
+            gestureDetector.onTouchEvent(event);
+            return true; // Indicate that the touch event is handled
+        });
     }
 
+    private void showPopupMenu(View view, int index) {
+        PopupMenu popup = new PopupMenu(context, view);
+        popup.inflate(R.menu.popup_menu);
+
+        // Set item click listeners
+        popup.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.option_one) {
+                Log.d("MainActivity", "update"+index);
+                //send to update page
+                return true;
+            }
+            if (item.getItemId() == R.id.option_two) {
+                Log.d("MainActivity","delete"+index);
+                deleteTodo(index);
+
+                return true;
+            }
+            return false;
+        });
+
+        popup.show(); // Display the popup menu
+    }
     @Override
     public int getItemCount() {
         return names.size();
     }
 
-    /*
-    @Override
-    public int getItemCount() {
-        return items.size();
+    private void deleteTodo(int index){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Todos", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        int len = sharedPreferences.getInt("count",0);
+
+        // remove item
+        editor.putString("name"+index,"");
+        editor.putString("desc"+index,"");
+        editor.putString("dead"+index,"");
+
+        // shift down values (list is 1 indexed)
+        for (int i = index+1; i <=len; i++) {
+            editor.putString("name"+(i-1),sharedPreferences.getString("name"+i,""));
+            editor.putString("desc"+(i-1),sharedPreferences.getString("desc"+i,""));
+            editor.putString("dead"+(i-1),sharedPreferences.getString("dead"+i,""));
+        }
+        editor.putInt("count",len-1);
+        editor.apply();
+        notifyItemRemoved(index);
     }
-    */
 }

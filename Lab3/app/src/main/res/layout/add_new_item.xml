@@ -43,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
+        android:onClick="cancelPressed"
         android:text="Cancel"
         app:layout_constraintStart_toEndOf="@+id/addButton"
         app:layout_constraintTop_toBottomOf="@+id/deadlineField" />
