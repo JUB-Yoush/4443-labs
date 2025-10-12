@@ -17,14 +17,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private final List<String> names;
-    private final List<String> descriptions;
-    private final List<String> deadlines;
-    private final Context context; // add context reference
+    private List<String> names;
+    private List<String> descriptions;
+    private List<String> deadlines;
+    private Context context; // add context reference
 
     public static class Item {
         String name;
@@ -164,8 +165,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         editor.putString("desc"+len,"");
         editor.putString("dead"+len,"");
 
+        names = getValues("name");
+        descriptions= getValues("desc");
+        deadlines = getValues("dead");
+
         editor.apply();
         notifyDataSetChanged();
         notifyItemRemoved(index);
     }
+    public List<String> getValues(String key){
+        List<String> out = new ArrayList<>();
+        SharedPreferences sharedPreferences = context.getSharedPreferences("Todos", MODE_PRIVATE);
+        int count = sharedPreferences.getInt("count",0);
+        for (int i = 0; i < count; i++) {
+            out.add(sharedPreferences.getString(key+i,""));
+        }
+        Log.d("MainActivity",out.toString());
+        return out;
+    }
+
+
 }
