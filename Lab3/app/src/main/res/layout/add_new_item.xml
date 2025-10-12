@@ -12,10 +12,11 @@
         android:id="@+id/textView4"
         android:layout_width="134dp"
         android:layout_height="23dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Name"
+        android:layout_marginTop="24dp"
+        android:text="To-Do"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,18 +34,24 @@
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
         android:onClick="onAddPressed"
         android:text="Add"
-        app:layout_constraintTop_toBottomOf="@+id/deadlineField"
-        tools:layout_editor_absoluteX="62dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deadlineField" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
+        android:layout_marginTop="52dp"
         android:onClick="cancelPressed"
         android:text="Cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/addButton"
         app:layout_constraintTop_toBottomOf="@+id/deadlineField" />
 
@@ -59,8 +66,8 @@
 
     <EditText
         android:id="@+id/deadlineField"
-        android:layout_width="296dp"
-        android:layout_height="49dp"
+        android:layout_width="361dp"
+        android:layout_height="52dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:ems="10"
@@ -70,8 +77,8 @@
 
     <EditText
         android:id="@+id/nameField"
-        android:layout_width="217dp"
-        android:layout_height="46dp"
+        android:layout_width="363dp"
+        android:layout_height="72dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:ems="10"
@@ -88,6 +95,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:outlineProvider="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 </androidx.constraintlayout.widget.ConstraintLayout>
