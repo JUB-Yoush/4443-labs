@@ -91,7 +91,7 @@ public class AddNewItemActivity extends AppCompatActivity {
 
         editor.putString("name" + sharedPreferences.getInt("count",0), nameField.getText().toString());
         editor.putString("desc" + sharedPreferences.getInt("count",0), descriptionField.getText().toString());
-        //editor.putString("dead" + sharedPreferences.getInt("count",0), deadlineField.getText().toString());
+        editor.putString("dead" + sharedPreferences.getInt("count",0), dateButton.getText().toString());
         editor.apply();
 
         Log.d("MainActivity","did it");
@@ -104,6 +104,7 @@ public class AddNewItemActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
+    /*
     public void testKVStore(){
         SharedPreferences sharedPreferences = getSharedPreferences("Todos", MODE_PRIVATE);
         int count = sharedPreferences.getInt("count",-1);
@@ -114,6 +115,7 @@ public class AddNewItemActivity extends AppCompatActivity {
             Log.d("MainActivity",sharedPreferences.getString("name"+i, ""));
         }
     }
+     */
 
     public void openDatePicker(View view) {
         datePickerDialog.show();

@@ -2,6 +2,8 @@ package com.example.lab3;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -77,8 +79,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         String index = String.valueOf(position);
 
         holder.nameView.setText(name);
-        holder.deadlineView.setText(description);
-        holder.descriptionView.setText(deadline);
+        holder.deadlineView.setText(deadline);
+        holder.descriptionView.setText(description);
         holder.indexView.setText(index);
 
     // Create a GestureDetector
@@ -165,7 +167,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         editor.putString("dead"+len,"");
 
         editor.apply();
-        notifyDataSetChanged();
         notifyItemRemoved(index);
+        notifyDataSetChanged();
+
+        Intent i = new Intent(context, MainActivity.class);
+        context.startActivity(i);
     }
 }
