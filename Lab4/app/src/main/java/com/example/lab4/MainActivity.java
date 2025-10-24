@@ -1,7 +1,17 @@
 package com.example.lab4;
 
-import android.os.Bundle;
+import android.net.Uri;
+import android.view,LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.annotation.NonNull;
+import android.receyleview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
+
+import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -21,4 +31,15 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
+}
+
+pulic class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.VH>{
+    private final List<Uri> items = new ArrayList<>();
+
+    static class VH extends RecyclerView.ViewHolder {
+        ImageView img;
+        VH(@NonNull View itemView) {
+            super(itemView);
+            img = itemView.findViewById(R.id.img);
+        }
 }

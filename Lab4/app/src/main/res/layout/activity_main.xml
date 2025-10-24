@@ -1,68 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:padding="8dp">
 
-    <LinearLayout
-        android:id="@+id/leftPane"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideSplit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.36"
+        app:orientation="vertical" />
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:useDefaultMargins="true">
-
-            <Button
-                android:id="@+id/btnCamera"
-                android:text="Camera"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_columnSpan="1"
-                android:layout_rowSpan="1"
-                android:padding="16dp" />
-
-            <Button
-                android:id="@+id/btnGallery"
-                android:text="Gallery"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_columnWeight="1"
-                android:layout_rowWeight="1"
-                android:layout_columnSpan="1"
-                android:layout_rowSpan="1"
-                android:padding="16dp" />
-        </GridLayout>
-    </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideLeftMid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.18"
+        app:orientation="vertical" />
 
     <View
+        android:id="@+id/divider"
         android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#22000000" />
+        android:layout_height="0dp"
+        android:background="#22000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideSplit" />
 
-    <FrameLayout
+    <Button
+        android:id="@+id/btnCamera"
+        android:text="Camera"
+        android:padding="16dp"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:padding="8dp">
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideLeftMid"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnGallery"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintDimensionRatio="W,1:1" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:padding="4dp" />
-    </FrameLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/btnGallery"
+        android:text="Gallery"
+        android:padding="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/guideLeftMid"
+        app:layout_constraintEnd_toStartOf="@id/guideSplit"
+        app:layout_constraintTop_toTopOf="@id/btnCamera"
+        app:layout_constraintBottom_toBottomOf="@id/btnCamera"
+        app:layout_constraintDimensionRatio="W,1:1" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="4dp"
+        app:layout_constraintStart_toStartOf="@id/guideSplit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
