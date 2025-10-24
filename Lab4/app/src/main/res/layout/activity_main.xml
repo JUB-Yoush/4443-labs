@@ -9,7 +9,9 @@
     android:paddingLeft="64dp"
     android:paddingTop="64dp"
     android:paddingRight="64dp"
-    android:paddingBottom="64dp">
+    android:paddingBottom="64dp"
+    tools:context=".MainActivity">
+
 
     <EditText
         android:id="@+id/editTextText"
