@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         btnPickImage = findViewById(R.id.btnPickImage);
+        imageView = findViewById(R.id.imageView);
     }
     private void registerResult(){
 

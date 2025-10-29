@@ -26,13 +26,13 @@
         android:textSize="34sp" />
 
     <ImageView
-        android:id="@+id/profilePicture"
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:src="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnPickImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Change Profile Photo" />
