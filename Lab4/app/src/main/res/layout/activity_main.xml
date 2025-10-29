@@ -15,8 +15,16 @@
     tools:context=".MainActivity">
 
 
+    <TextView
+        android:id="@+id/headerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profile Picture Framer"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/nameText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -26,14 +34,20 @@
         android:textSize="34sp" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profilePicture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:src="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/btnPickImage"
+        android:id="@+id/photoBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change Profile Photo" />
+        android:text="Take Photo" />
+
+    <Button
+        android:id="@+id/galleryBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select From Gallaery" />
 </LinearLayout>
