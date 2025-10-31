@@ -46,6 +46,7 @@ Button photoBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSharedPreferences("pfp", 0).edit().clear().commit();
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -55,41 +56,56 @@ Button photoBtn;
             return insets;
         });
 
+        if (!getSavedPfp().equals("nothing")){
+            profilePicture.setImageURI(Uri.parse(getSavedPfp()));
+        }
+
         galleryBtn = findViewById(R.id.galleryBtn);
         photoBtn = findViewById(R.id.photoBtn);
         profilePicture = findViewById(R.id.profilePicture);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("pfp", MODE_PRIVATE);
-        String possilbe_uri=sharedPreferences.getString("URI","nothing");
-
-        Log.d("Main Activity",possilbe_uri);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("URI", "nothing");
-        editor.apply();
-
-        if (!possilbe_uri.equals("nothing")){
-            profilePicture.setImageURI(Uri.parse(possilbe_uri));
-        }
 
         registerResult();
+         checkStoragePermissions();
 
         galleryBtn.setOnClickListener(view -> pickImage());
 
-        // request for camera
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
-                   Manifest.permission.CAMERA
-            }, 100);
-        }
+        photoBtn.setOnClickListener(view -> openCamera());
 
-        photoBtn.setOnClickListener(v -> {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent,100);
-    });
+        // request for camera
+        /*
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                Manifest.permission.CAMERA
+        }, 100);
+
+         */
     }
+
+    public String getSavedPfp(){
+        SharedPreferences sharedPreferences = getSharedPreferences("pfp", MODE_PRIVATE);
+        String possilbe_uri=sharedPreferences.getString("URI","nothing");
+        return possilbe_uri;
+    }
+
+    private boolean checkCameraPermissions(){
+        return ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean checkStoragePermissions() {
+        return ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestStoragePermission(){
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                200);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d("requestperms",String.valueOf(requestCode));
 
         if (requestCode == 100) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -97,6 +113,15 @@ Button photoBtn;
             } else {
                 // Permission denied
                 Toast.makeText(this, "Camera permission is required to access the camera.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        else if (requestCode == 200) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with camera
+            } else {
+                // Permission denied
+                Toast.makeText(this, "Storage permissions are required",Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -132,7 +157,6 @@ Button photoBtn;
                 }
         );
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data, @NonNull ComponentCaller caller) {
         super.onActivityResult(requestCode, resultCode, data, caller);
