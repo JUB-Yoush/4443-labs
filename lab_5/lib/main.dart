@@ -167,7 +167,7 @@ class ItemCard extends StatelessWidget {
               ),
 
               Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     //Set up title
