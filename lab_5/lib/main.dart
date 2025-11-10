@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 
 void main() {
   runApp(MyApp());
@@ -125,51 +126,59 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
     return Card(
       elevation: 2.0,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-    
-          children: <Widget>[
-            ///IMAGE -> TEXT
-            Image.network(
-              itemList[position].imageUrl,
-    
-              ///If the image link is broken, throw placeholder
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  Icons.broken_image,
-                  size: 100,
-                  color: Colors.grey,
-                );
-              },
-    
-              height: 240,
-              fit: BoxFit.cover,
-            ),
-    
-            Column(
-              children: [
-                Text(
-                  //Set up title
-                  itemList[position].title,
-                  style: TextStyle(
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.inverseSurface,
+      child: InkWell(
+        splashColor: Theme.of(context).colorScheme.inversePrimary,
+        onTap: () {
+          print("Card tapped!");
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+      
+            children: <Widget>[
+              ///IMAGE -> TEXT
+              Image.network(
+                itemList[position].imageUrl,
+      
+                ///If the image link is broken, throw placeholder
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    Icons.broken_image,
+                    size: 100,
+                    color: Colors.grey,
+                  );
+                },
+      
+                height: 240,
+                fit: BoxFit.cover,
+              ),
+      
+              Column(
+                children: [
+                  Text(
+                    //Set up title
+                    itemList[position].title,
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.inverseSurface,
+                    ),
                   ),
-                ),
-                SizedBox(height: 8.0),
-                Text(
-                  itemList[position].description,
-                  style: TextStyle(fontSize: 22.0),
-                ),
-              ],
-            ),
-          ],
+                  SizedBox(height: 8.0),
+                  Text(
+                    itemList[position].description,
+                    style: TextStyle(fontSize: 22.0),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
