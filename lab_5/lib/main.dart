@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -80,9 +80,9 @@ class _MyHomePageState extends State<MyHomePage> {
     itemList = [
       ListViewItems('', 'test2', ''),
       ListViewItems('', 'test2', 'List item with no title nor valid image link.'),
-      ListViewItems('Mystra', 
-      'https://static.wikia.nocookie.net/forgottenrealms/images/c/c6/Mystra_cover.jpg/revision/latest?cb=20210501051407', 
-      'I am Mystra. I am the Lady of Might and the Mistress of Magic! I am Power Incarnate! Wherever magic is worked, there am I – from the cold poles of Toril to its hottest jungles, whatever the hand or claw or will that works the sorcery! Behold me and fear me! Yet behold me and love me–as all who deal with me in honesty do. This world is my domain. I am magic, mightiest among all those men worship. I am the One True Spell at the heart of all spells. There is no other.'),
+      ListViewItems('Chocolate Chip Cookie', 
+      'https://assets.bonappetit.com/photos/5ca534485e96521ff23b382b/1:1/w_2560%2Cc_limit/chocolate-chip-cookie.jpg', 
+      'A classic cookie.  Very yummy.  10/10.'),
       ListViewItems('helpme1', 'helpme2', 'helpme3'),
       ListViewItems('helpme1', 'helpme2', 'helpme3'),
       ListViewItems('helpme1', 'helpme2', 'helpme3'),
@@ -124,6 +124,11 @@ class ItemCard extends StatelessWidget {
   final List<ListViewItems> itemList;
   final int position;
 
+  double getResponsiveFontSize(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    return screenWidth * 0.04;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -142,12 +147,13 @@ class ItemCard extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.all(20.0),
+          
 
           child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
           
-
+            spacing: 10,
             children: <Widget>[
               ///IMAGE -> TEXT
               Image.network(
@@ -162,31 +168,38 @@ class ItemCard extends StatelessWidget {
                   );
                 },
 
-                height: 240,
-                fit: BoxFit.cover,
+                height: 100,
+               
               ),
 
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    //Set up title
-                    itemList[position].title,
-                  
-                  
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.inverseSurface,
+              Flexible(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    
+                    Text(
+                      //Set up title
+                      itemList[position].title,
+                    
+                    
+                      style: TextStyle(
+                        fontSize: getResponsiveFontSize(context),
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.inverseSurface,
+                      
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 8.0),
-                  Text(
                  
-                    itemList[position].description,
-                    style: TextStyle(fontSize: 22.0),
-                  ),
-                ],
+                    Text(
+                   
+                      itemList[position].description,
+                      
+                      style: TextStyle(
+                        fontSize: getResponsiveFontSize(context),
+                        ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -203,6 +216,7 @@ class Details extends StatelessWidget {
   ///which would be pass through when a card is clicked
   final List<ListViewItems> itemList;
   final int position;
+
 
   @override
   Widget build(BuildContext context) {
@@ -244,3 +258,5 @@ class Details extends StatelessWidget {
     );
   }
 }
+
+
