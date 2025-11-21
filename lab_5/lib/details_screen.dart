@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:lab_5/item_list.dart';
+import 'package:lab_5/item_models.dart';
 ///Details screen shows the picture in a larger resolution and description text
 class Details extends StatelessWidget {
   const Details({super.key, required this.itemList, required this.position});
